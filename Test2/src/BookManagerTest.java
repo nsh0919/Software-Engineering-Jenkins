@@ -25,4 +25,13 @@ public class BookManagerTest {
         assertNotNull(found);
         assertEquals("Clean Code", found.getTitle());
     }
+
+    @Test
+    void checkBookExistsByTitle() {
+        BookManager manager = new BookManager();
+
+        manager.addBook(new Book("Clean Code"));
+
+        assertTrue(manager.existsByTitle("Clean Code"));
+    }
 }
