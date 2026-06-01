@@ -1,3 +1,5 @@
+// 안녕
+
 pipeline {
     agent any
 
