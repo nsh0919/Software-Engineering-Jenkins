@@ -34,4 +34,13 @@ public class BookManagerTest {
 
         assertTrue(manager.existsByTitle("Clean Code"));
     }
+
+    @Test
+    void returnsFalseWhenBookTitleDoesNotExist() {
+        BookManager manager = new BookManager();
+
+        manager.addBook(new Book("Clean Code"));
+
+        assertFalse(manager.existsByTitle("Unknown Book"));
+    }
 }
