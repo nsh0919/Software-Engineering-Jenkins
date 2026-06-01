@@ -67,6 +67,20 @@ pipeline {
 
         failure {
             echo "Build or test failed!"
+
+            emailext(
+                to: '받을이메일주소',
+                subject: "[Jenkins] Build Failed - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+    Jenkins build failed.
+
+    Job Name: ${env.JOB_NAME}
+    Build Number: ${env.BUILD_NUMBER}
+    Build URL: ${env.BUILD_URL}
+
+    Please check the Jenkins Console Output.
+    """
+            )
         }
 
         success {
@@ -77,7 +91,27 @@ pipeline {
                 echo "Build URL: ${BUILD_URL}" >> ${REPORT_DIR}/build-success.txt
                 echo "Result: SUCCESS" >> ${REPORT_DIR}/build-success.txt
             '''
+
             archiveArtifacts artifacts: "${REPORT_DIR}/build-success.txt", allowEmptyArchive: false
+
+            emailext(
+                to: 'liz0824@g.hongik.ac.kr',
+                subject: "[Jenkins] Build Success - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+    Jenkins build succeeded.
+
+    Job Name: ${env.JOB_NAME}
+    Build Number: ${env.BUILD_NUMBER}
+    Build URL: ${env.BUILD_URL}
+
+    Result: SUCCESS
+
+    Archived files:
+    - test-reports/build-success.txt
+    - test-reports/test-output.txt
+    """
+            )
+
             echo "Build and test succeeded!"
         }
     }
