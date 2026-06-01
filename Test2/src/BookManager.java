@@ -23,4 +23,8 @@ public class BookManager {
         }
         return null;
     }
+
+    public boolean existsByTitle(String title) {
+        return findByTitle(title) != null;
+    }
 }
