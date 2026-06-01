@@ -68,6 +68,14 @@ pipeline {
         }
 
         success {
+            sh '''
+                echo "Build and test succeeded!" > ${REPORT_DIR}/build-success.txt
+                echo "Job Name: ${JOB_NAME}" >> ${REPORT_DIR}/build-success.txt
+                echo "Build Number: ${BUILD_NUMBER}" >> ${REPORT_DIR}/build-success.txt
+                echo "Build URL: ${BUILD_URL}" >> ${REPORT_DIR}/build-success.txt
+                echo "Result: SUCCESS" >> ${REPORT_DIR}/build-success.txt
+            '''
+            archiveArtifacts artifacts: "${REPORT_DIR}/build-success.txt", allowEmptyArchive: false
             echo "Build and test succeeded!"
         }
     }
